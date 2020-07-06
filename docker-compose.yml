@@ -1,0 +1,33 @@
+version: '3'
+services:
+   mysql:
+     build: ./mysql
+     container_name: sql_web
+     volumes:
+      - "./mysql-data/db:/var/lib/mysql"
+     restart: always
+     ports:
+      - 3306:3306
+   #  volumes:
+   # - ./dump:/docker-entrypoint-initdb.d
+   #  RUN chmod 777 /usr/bin/docker-entrypoint.sh \
+   #  && ln -s /usr/local/bin/docker-entrypoint.sh /
+   #  entrypoint: ['./docker-entrypoint.sh', '--default-authentication-plugin=mysql_native_password']
+     environment:
+      MYSQL_ROOT_PASSWORD: wutZ25Ba
+      MYSQL_DATABASE: aquarium
+#      MYSQL_USER: udo
+#      MYSQL_PASSWORD: hundundkatze
+   web:
+      build: ./myapache 
+      container_name: php_web
+      depends_on:
+        - mysql
+      ports:
+         - 8080:80
+      links:
+        - mysql 
+#      volumes:
+#        - ./www:/var/www/html/ 
+      stdin_open: true
+      tty: true

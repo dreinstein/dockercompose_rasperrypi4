@@ -1,0 +1,13 @@
+
+#Derived from official m"ysql image (our base image)
+FROM hypriot/rpi-mysql
+
+# Add a database
+ENV MYSQL_DATABASE aquarium
+COPY ./mysqldump.sql /home/.
+COPY ./sqlScripts/* /home/.
+#RUN ["chmod", "+x", "./home/aquaval.sql"]
+RUN chmod +x ./home/aquaval.sql
+#RUN ./home/aquaval.sql
+#RUN mysql -u root -p"wutZ25Ba" aquarium</home/mysqldump.sql 
+
